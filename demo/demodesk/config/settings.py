@@ -13,7 +13,6 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
@@ -21,10 +20,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '_crkn1+fnzu5$vns_-d+^ayiq%z4k*s!!ag0!mfy36(y!vrazd'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ["localhost"]
 
 # Application definition
 
@@ -39,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'markdown_deux',
     'bootstrapform',
-    'helpdesk'
+    'helpdesk',
 ]
 
 MIDDLEWARE = [
@@ -60,7 +58,8 @@ TEMPLATES = [
         'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
-            'debug': True,
+            'debug':
+            True,
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
@@ -73,7 +72,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'demodesk.config.wsgi.application'
 
-
 # django-helpdesk configuration settings
 # You can override django-helpdesk's defaults by redefining them here.
 # To see what settings are available, see the docs/configuration.rst
@@ -81,13 +79,13 @@ WSGI_APPLICATION = 'demodesk.config.wsgi.application'
 # Some common settings are below.
 
 HELPDESK_DEFAULT_SETTINGS = {
-            'use_email_as_submitter': True,
-            'email_on_ticket_assign': True,
-            'email_on_ticket_change': True,
-            'login_view_ticketlist': True,
-            'email_on_ticket_apichange': True,
-            'preset_replies': True,
-            'tickets_per_page': 25
+    'use_email_as_submitter': True,
+    'email_on_ticket_assign': True,
+    'email_on_ticket_change': True,
+    'login_view_ticketlist': True,
+    'email_on_ticket_apichange': True,
+    'preset_replies': True,
+    'tickets_per_page': 25,
 }
 
 # Should the public web portal be enabled?
@@ -104,6 +102,7 @@ HELPDESK_REDIRECT_TO_LOGIN_BY_DEFAULT = False
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/login/'
 
+HELPDESK_PUBLIC_TICKET_QUEUE = "queuenamethatdoesnotexist"
 
 # Database
 # - by default, we use SQLite3 for the demo, but you can also
@@ -117,7 +116,6 @@ DATABASES = {
     }
 }
 
-
 # Sites
 # - this allows hosting of more than one site from a single server,
 #   in practice you can probably just leave this default if you only
@@ -126,11 +124,10 @@ DATABASES = {
 
 SITE_ID = 1
 
-
 # Sessions
 # https://docs.djangoproject.com/en/1.11/topics/http/sessions
 
-SESSION_COOKIE_AGE = 86400 # = 1 day
+SESSION_COOKIE_AGE = 86400  # = 1 day
 
 # For better default security, set these cookie flags, but
 # these are likely to cause problems when testing locally
@@ -139,22 +136,25 @@ SESSION_COOKIE_AGE = 86400 # = 1 day
 #CSRF_COOKIE_HTTPONLY = True
 #SESSION_COOKIE_HTTPONLY = True
 
-
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.MinimumLengthValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.CommonPasswordValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
 
@@ -188,7 +188,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
