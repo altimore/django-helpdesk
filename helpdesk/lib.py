@@ -26,7 +26,7 @@ except ImportError:
 
 from django.conf import settings
 from django.db.models import Q
-from django.utils import six
+import six
 from django.utils.encoding import smart_text
 from django.utils.safestring import mark_safe
 
