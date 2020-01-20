@@ -2,11 +2,12 @@ from functools import wraps
 
 from django.urls import reverse
 from django.http import HttpResponseRedirect, Http404
-from django.utils.decorators import available_attrs
 
 from helpdesk import settings as helpdesk_settings
 
-
+def available_attrs(*args, **kwargs):
+    return functools.WRAPPER_ASSIGNMENTS(*args, **kwargs)
+    
 def protect_view(view_func):
     """
     Decorator for protecting the views checking user, redirecting
