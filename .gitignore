@@ -10,6 +10,7 @@ docs/doctrees/*
 .project
 .pydevproject
 .directory
+.mypy_cache/
 
 # ignore demo attachments that user might have added
 helpdesk/attachments/
@@ -22,4 +23,3 @@ demo/demodesk/media/helpdesk/attachments/DH-3/3/*
 demo/demodesk/media/helpdesk/attachments/DH-3/4/*
 !demo/demodesk/media/helpdesk/attachments/DH-3/3/someinfo.txt
 !demo/demodesk/media/helpdesk/attachments/DH-3/4/helpdesk.png
-
