@@ -7,7 +7,7 @@ from helpdesk import settings as helpdesk_settings
 
 
 def available_attrs(*args, **kwargs):
-    return functools.WRAPPER_ASSIGNMENTS(*args, **kwargs)
+    return functools.WRAPPER_ASSIGNMENTS
 
 
 def protect_view(view_func):
