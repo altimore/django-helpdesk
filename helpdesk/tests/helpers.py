@@ -1,15 +1,18 @@
 # -*- coding: utf-8 -*-
 import sys
+
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
 
-def get_staff_user(username='helpdesk.staff', password='password'):
+def get_staff_user(username="helpdesk.staff", password="password"):
     try:
         user = User.objects.get(username=username)
     except User.DoesNotExist:
-        user = User.objects.create_user(username=username, password=password, email='staff@example.com')
+        user = User.objects.create_user(
+            username=username, password=password, email="staff@example.com"
+        )
         user.is_staff = True
         user.save()
     else:
@@ -20,7 +23,8 @@ def get_staff_user(username='helpdesk.staff', password='password'):
 
 def reload_urlconf(urlconf=None):
 
-    from django.utils import six
+    import six
+
     if six.PY2:
         from imp import reload
     else:
@@ -38,7 +42,8 @@ def reload_urlconf(urlconf=None):
         reload(sys.modules[urlconf])
 
     from django.urls import clear_url_caches
+
     clear_url_caches()
 
 
-HELPDESK_URLCONF = 'helpdesk.urls'
+HELPDESK_URLCONF = "helpdesk.urls"

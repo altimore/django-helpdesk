@@ -11,6 +11,13 @@ import mimetypes
 import os
 from smtplib import SMTPException
 
+import six
+from django.conf import settings
+from django.db.models import Q
+from django.utils.encoding import smart_text
+from django.utils.safestring import mark_safe
+from helpdesk.models import Attachment, EmailTemplate
+
 try:
     # Python 2 support
     from base64 import urlsafe_b64encode as b64encode
@@ -24,24 +31,19 @@ except ImportError:
     # Python 3 support
     from base64 import decodebytes as b64decode
 
-from django.conf import settings
-from django.db.models import Q
-import six
-from django.utils.encoding import smart_text
-from django.utils.safestring import mark_safe
 
-from helpdesk.models import Attachment, EmailTemplate
-
-logger = logging.getLogger('helpdesk')
+logger = logging.getLogger("helpdesk")
 
 
-def send_templated_mail(template_name,
-                        context,
-                        recipients,
-                        sender=None,
-                        bcc=None,
-                        fail_silently=False,
-                        files=None):
+def send_templated_mail(
+    template_name,
+    context,
+    recipients,
+    sender=None,
+    bcc=None,
+    fail_silently=False,
+    files=None,
+):
     """
     send_templated_mail() is a wrapper around Django's e-mail routines that
     allows us to easily send multipart (text/plain & text/html) e-mails using
@@ -70,78 +72,93 @@ def send_templated_mail(template_name,
     """
     from django.core.mail import EmailMultiAlternatives
     from django.template import engines
-    from_string = engines['django'].from_string
+
+    from_string = engines["django"].from_string
 
     from helpdesk.models import EmailTemplate
-    from helpdesk.settings import HELPDESK_EMAIL_SUBJECT_TEMPLATE, \
-        HELPDESK_EMAIL_FALLBACK_LOCALE
+    from helpdesk.settings import (
+        HELPDESK_EMAIL_SUBJECT_TEMPLATE,
+        HELPDESK_EMAIL_FALLBACK_LOCALE,
+    )
 
-    locale = context['queue'].get('locale') or HELPDESK_EMAIL_FALLBACK_LOCALE
+    locale = context["queue"].get("locale") or HELPDESK_EMAIL_FALLBACK_LOCALE
 
     try:
-        t = EmailTemplate.objects.get(template_name__iexact=template_name, locale=locale)
+        t = EmailTemplate.objects.get(
+            template_name__iexact=template_name, locale=locale
+        )
     except EmailTemplate.DoesNotExist:
         try:
-            t = EmailTemplate.objects.get(template_name__iexact=template_name, locale__isnull=True)
+            t = EmailTemplate.objects.get(
+                template_name__iexact=template_name, locale__isnull=True
+            )
         except EmailTemplate.DoesNotExist:
             logger.warning('template "%s" does not exist, no mail sent', template_name)
             return  # just ignore if template doesn't exist
 
-    subject_part = from_string(
-        HELPDESK_EMAIL_SUBJECT_TEMPLATE % {
-            "subject": t.subject
-        }).render(context).replace('\n', '').replace('\r', '')
+    subject_part = (
+        from_string(HELPDESK_EMAIL_SUBJECT_TEMPLATE % {"subject": t.subject})
+        .render(context)
+        .replace("\n", "")
+        .replace("\r", "")
+    )
 
-    footer_file = os.path.join('helpdesk', locale, 'email_text_footer.txt')
+    footer_file = os.path.join("helpdesk", locale, "email_text_footer.txt")
 
     text_part = from_string(
         "%s{%% include '%s' %%}" % (t.plain_text, footer_file)
     ).render(context)
 
-    email_html_base_file = os.path.join('helpdesk', locale, 'email_html_base.html')
+    email_html_base_file = os.path.join("helpdesk", locale, "email_html_base.html")
     # keep new lines in html emails
-    if 'comment' in context:
-        context['comment'] = mark_safe(context['comment'].replace('\r\n', '<br>'))
+    if "comment" in context:
+        context["comment"] = mark_safe(context["comment"].replace("\r\n", "<br>"))
 
     html_part = from_string(
         "{%% extends '%s' %%}{%% block title %%}"
         "%s"
-        "{%% endblock %%}{%% block content %%}%s{%% endblock %%}" %
-        (email_html_base_file, t.heading, t.html)
+        "{%% endblock %%}{%% block content %%}%s{%% endblock %%}"
+        % (email_html_base_file, t.heading, t.html)
     ).render(context)
 
     if isinstance(recipients, str):
-        if recipients.find(','):
-            recipients = recipients.split(',')
+        if recipients.find(","):
+            recipients = recipients.split(",")
     elif type(recipients) != list:
         recipients = [recipients]
 
-    msg = EmailMultiAlternatives(subject_part, text_part,
-                                 sender or settings.DEFAULT_FROM_EMAIL,
-                                 recipients, bcc=bcc)
+    msg = EmailMultiAlternatives(
+        subject_part,
+        text_part,
+        sender or settings.DEFAULT_FROM_EMAIL,
+        recipients,
+        bcc=bcc,
+    )
     msg.attach_alternative(html_part, "text/html")
 
     if files:
         for filename, filefield in files:
             mime = mimetypes.guess_type(filename)
             if mime[0] is not None and mime[0] == "text/plain":
-                with open(filefield.path, 'r') as attachedfile:
+                with open(filefield.path, "r") as attachedfile:
                     content = attachedfile.read()
                     msg.attach(filename, content)
             else:
                 if six.PY3:
                     msg.attach_file(filefield.path)
                 else:
-                    with open(filefield.path, 'rb') as attachedfile:
+                    with open(filefield.path, "rb") as attachedfile:
                         content = attachedfile.read()
                         msg.attach(filename, content)
 
-    logger.debug('Sending email to: {!r}'.format(recipients))
+    logger.debug("Sending email to: {!r}".format(recipients))
 
     try:
         return msg.send()
     except SMTPException as e:
-        logger.exception('SMTPException raised while sending email to {}'.format(recipients))
+        logger.exception(
+            "SMTPException raised while sending email to {}".format(recipients)
+        )
         if not fail_silently:
             raise e
         return 0
@@ -183,24 +200,24 @@ def apply_query(queryset, params):
 
         sorting: The name of the column to sort by
     """
-    for key in params['filtering'].keys():
-        filter = {key: params['filtering'][key]}
+    for key in params["filtering"].keys():
+        filter = {key: params["filtering"][key]}
         queryset = queryset.filter(**filter)
 
-    search = params.get('search_string', None)
+    search = params.get("search_string", None)
     if search:
         qset = (
-            Q(title__icontains=search) |
-            Q(description__icontains=search) |
-            Q(resolution__icontains=search) |
-            Q(submitter_email__icontains=search)
+            Q(title__icontains=search)
+            | Q(description__icontains=search)
+            | Q(resolution__icontains=search)
+            | Q(submitter_email__icontains=search)
         )
 
         queryset = queryset.filter(qset)
 
-    sorting = params.get('sorting', None)
+    sorting = params.get("sorting", None)
     if sorting:
-        sortreverse = params.get('sortreverse', None)
+        sortreverse = params.get("sortreverse", None)
         if sortreverse:
             sorting = "-%s" % sorting
         queryset = queryset.order_by(sorting)
@@ -211,18 +228,32 @@ def apply_query(queryset, params):
 def ticket_template_context(ticket):
     context = {}
 
-    for field in ('title', 'created', 'modified', 'submitter_email',
-                  'status', 'get_status_display', 'on_hold', 'description',
-                  'resolution', 'priority', 'get_priority_display',
-                  'last_escalation', 'ticket', 'ticket_for_url',
-                  'get_status', 'ticket_url', 'staff_url', '_get_assigned_to'
-                  ):
+    for field in (
+        "title",
+        "created",
+        "modified",
+        "submitter_email",
+        "status",
+        "get_status_display",
+        "on_hold",
+        "description",
+        "resolution",
+        "priority",
+        "get_priority_display",
+        "last_escalation",
+        "ticket",
+        "ticket_for_url",
+        "get_status",
+        "ticket_url",
+        "staff_url",
+        "_get_assigned_to",
+    ):
         attr = getattr(ticket, field, None)
         if callable(attr):
-            context[field] = '%s' % attr()
+            context[field] = "%s" % attr()
         else:
             context[field] = attr
-    context['assigned_to'] = context['_get_assigned_to']
+    context["assigned_to"] = context["_get_assigned_to"]
 
     return context
 
@@ -230,7 +261,7 @@ def ticket_template_context(ticket):
 def queue_template_context(queue):
     context = {}
 
-    for field in ('title', 'slug', 'email_address', 'from_address', 'locale'):
+    for field in ("title", "slug", "email_address", "from_address", "locale"):
         attr = getattr(queue, field, None)
         if callable(attr):
             context[field] = attr()
@@ -256,10 +287,10 @@ def safe_template_context(ticket):
     """
 
     context = {
-        'queue': queue_template_context(ticket.queue),
-        'ticket': ticket_template_context(ticket),
+        "queue": queue_template_context(ticket.queue),
+        "ticket": ticket_template_context(ticket),
     }
-    context['ticket']['queue'] = context['queue']
+    context["ticket"]["queue"] = context["queue"]
 
     return context
 
@@ -272,6 +303,7 @@ def text_is_spam(text, request):
     # assume it isn't spam.
     from django.contrib.sites.models import Site
     from django.core.exceptions import ImproperlyConfigured
+
     try:
         from helpdesk.akismet import Akismet
     except ImportError:
@@ -279,28 +311,25 @@ def text_is_spam(text, request):
     try:
         site = Site.objects.get_current()
     except ImproperlyConfigured:
-        site = Site(domain='configure-django-sites.com')
+        site = Site(domain="configure-django-sites.com")
 
-    ak = Akismet(
-        blog_url='http://%s/' % site.domain,
-        agent='django-helpdesk',
-    )
+    ak = Akismet(blog_url="http://%s/" % site.domain, agent="django-helpdesk")
 
-    if hasattr(settings, 'TYPEPAD_ANTISPAM_API_KEY'):
+    if hasattr(settings, "TYPEPAD_ANTISPAM_API_KEY"):
         ak.setAPIKey(key=settings.TYPEPAD_ANTISPAM_API_KEY)
-        ak.baseurl = 'api.antispam.typepad.com/1.1/'
-    elif hasattr(settings, 'AKISMET_API_KEY'):
+        ak.baseurl = "api.antispam.typepad.com/1.1/"
+    elif hasattr(settings, "AKISMET_API_KEY"):
         ak.setAPIKey(key=settings.AKISMET_API_KEY)
     else:
         return False
 
     if ak.verify_key():
         ak_data = {
-            'user_ip': request.META.get('REMOTE_ADDR', '127.0.0.1'),
-            'user_agent': request.META.get('HTTP_USER_AGENT', ''),
-            'referrer': request.META.get('HTTP_REFERER', ''),
-            'comment_type': 'comment',
-            'comment_author': '',
+            "user_ip": request.META.get("REMOTE_ADDR", "127.0.0.1"),
+            "user_agent": request.META.get("HTTP_USER_AGENT", ""),
+            "referrer": request.META.get("HTTP_REFERER", ""),
+            "comment_type": "comment",
+            "comment_author": "",
         }
 
         return ak.comment_check(smart_text(text), data=ak_data)
@@ -309,7 +338,7 @@ def text_is_spam(text, request):
 
 
 def process_attachments(followup, attached_files):
-    max_email_attachment_size = getattr(settings, 'MAX_EMAIL_ATTACHMENT_SIZE', 512000)
+    max_email_attachment_size = getattr(settings, "MAX_EMAIL_ATTACHMENT_SIZE", 512000)
     attachments = []
 
     for attached in attached_files:
@@ -319,9 +348,9 @@ def process_attachments(followup, attached_files):
                 followup=followup,
                 file=attached,
                 filename=filename,
-                mime_type=attached.content_type or
-                mimetypes.guess_type(filename, strict=False)[0] or
-                'application/octet-stream',
+                mime_type=attached.content_type
+                or mimetypes.guess_type(filename, strict=False)[0]
+                or "application/octet-stream",
                 size=attached.size,
             )
             att.save()
