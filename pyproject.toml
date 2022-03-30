@@ -1,0 +1,59 @@
+[tool.poetry]
+name = "helpdesk"
+version = "0.3.4"
+description="Django-powered ticket tracker for your helpdesk"
+authors = ["Ross Poulton <ross@rossp.org>"]
+maintainers = ["Garret Wassermann <gwasser@gmail.com>"]
+license="BSD"
+homepage = "https://github.com/django-helpdesk/django-helpdesk"
+classifiers = [
+        "Development Status :: 4 - Beta",
+        "Programming Language :: Python",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
+        "Framework :: Django",
+        'Framework :: Django :: 2.2',
+        "Framework :: Django :: 3.2",
+        "Environment :: Web Environment",
+        "Operating System :: OS Independent",
+        "Intended Audience :: Customer Service",
+        "License :: OSI Approved :: BSD License",
+        "Topic :: Software Development :: Bug Tracking",
+        "Topic :: Software Development :: Libraries :: Python Modules",
+        "Topic :: Office/Business",
+        "Natural Language :: English",
+]
+
+
+[tool.poetry.dependencies]
+python = "^3.9.6"
+Django = "^4.0.3"
+django-bootstrap4-form = "^4.0.1"
+celery = "^5.2.3"
+# django-celery-beat = "^2.2.1"
+django-celery-beat = { git = "https://github.com/celery/django-celery-beat.git", rev = "fa73034be892052893e4ef17926ef3a5d4a21ea2" } # to solve django >= 4
+email-reply-parser = "^0.5.12"
+akismet = "^1.1"
+Markdown = "^3.3.6"
+beautifulsoup4 = "^4.10.0"
+lxml = "^4.8.0"
+simplejson = "^3.17.6"
+pytz = "^2022.1"
+six = "^1.16.0"
+djangorestframework = "^3.13.1"
+django-model-utils = "^4.2.0"
+
+[tool.poetry.dev-dependencies]
+PySocks = "^1.7.1"
+pycodestyle = "^2.8.0"
+codecov = "^2.1.12"
+coverage = "^6.3.2"
+argparse = "^1.4.0"
+pbr = "^5.8.1"
+mock = "^4.0.3"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
