@@ -27,13 +27,13 @@ Demo Quickstart
 `django-helpdesk` includes a basic demo Django project so that you may easily
 get started with testing or developing `django-helpdesk`. The demo project
 resides in the `demo_helpdesk/` top-level folder.
-
+``
     git clone https://github.com/altimore/django-helpdesk.git
     cd django-helpdesk
     poetry run demo_helpdesk/manage.py migrate
     poetry run demo_helpdesk/manage.py createsuperuser
     poetry run demo_helpdesk/manage.py runserver
-
+``
 then pointing your web browser at `localhost:8080`.
 
 **NOTE REGARDING SQLITE AND SEARCHING:**
@@ -53,10 +53,11 @@ Installation
 
 Testing
 -------
+``
     git clone https://github.com/altimore/django-helpdesk.git
     cd django-helpdesk
     poetry run demo_helpdesk/manage.py test
-
+``
 Contributing
 ------------
 
