@@ -137,7 +137,7 @@ def pop3_sync(q, logger, server):
         if type(raw_content[0]) is bytes:
             full_message = "\n".join([elm.decode("utf-8") for elm in raw_content])
         else:
-            full_message = encoding.force_text("\n".join(raw_content), errors="replace")
+            full_message = encoding.force_str("\n".join(raw_content), errors="replace")
         ticket = object_from_message(message=full_message, queue=q, logger=logger)
 
         if ticket:
@@ -190,7 +190,7 @@ def imap_sync(q, logger, server):
             for num in msgnums:
                 logger.info("Processing message %s" % num)
                 status, data = server.fetch(num, "(RFC822)")
-                full_message = encoding.force_text(data[0][1], errors="replace")
+                full_message = encoding.force_str(data[0][1], errors="replace")
                 try:
                     ticket = object_from_message(
                         message=full_message, queue=q, logger=logger
@@ -294,7 +294,7 @@ def process_queue(q, logger):
         for i, m in enumerate(mail, 1):
             logger.info("Processing message %d" % i)
             with open(m, "r") as f:
-                full_message = encoding.force_text(f.read(), errors="replace")
+                full_message = encoding.force_str(f.read(), errors="replace")
                 ticket = object_from_message(
                     message=full_message, queue=q, logger=logger
                 )
@@ -442,7 +442,9 @@ def create_object_from_email_message(message, ticket_id, payload, files, logger)
                 priority=payload["priority"],
             )
             ticket.save()
-            logger.debug("Created new ticket %s-%s" % (ticket.queue.slug, ticket.id))
+            logger.debug(
+                "Created new ticket {}-{}".format(ticket.queue.slug, ticket.id)
+            )
 
             new = True
 
@@ -454,7 +456,7 @@ def create_object_from_email_message(message, ticket_id, payload, files, logger)
     f = FollowUp(
         ticket=ticket,
         title=_(
-            "E-Mail Received from %(sender_email)s" % {"sender_email": sender_email}
+            "E-Mail Received from {sender_email}".format(sender_email=sender_email)
         ),
         date=now,
         public=True,
@@ -580,7 +582,7 @@ def object_from_message(message, queue, logger):
         for hdr in cc:
             tempcc.extend(hdr.split(","))
         # use a set to ensure no duplicates
-        cc = set([x.strip() for x in tempcc])
+        cc = {x.strip() for x in tempcc}
 
     for ignore in IgnoreEmail.objects.filter(Q(queues=queue) | Q(queues__isnull=True)):
         if ignore.test(sender_email):
@@ -594,7 +596,7 @@ def object_from_message(message, queue, logger):
     if matchobj:
         # This is a reply or forward.
         ticket = matchobj.group("id")
-        logger.info("Matched tracking ID %s-%s" % (queue.slug, ticket))
+        logger.info("Matched tracking ID {}-{}".format(queue.slug, ticket))
     else:
         logger.info("No tracking ID matched.")
         ticket = None

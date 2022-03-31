@@ -6,13 +6,15 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('helpdesk', '0028_kbitem_team'),
+        ("helpdesk", "0028_kbitem_team"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='kbcategory',
-            name='public',
-            field=models.BooleanField(default=True, verbose_name='Is KBCategory publicly visible?'),
+            model_name="kbcategory",
+            name="public",
+            field=models.BooleanField(
+                default=True, verbose_name="Is KBCategory publicly visible?"
+            ),
         ),
     ]

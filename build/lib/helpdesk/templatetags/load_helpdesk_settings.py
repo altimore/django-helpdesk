@@ -13,11 +13,14 @@ def load_helpdesk_settings(request):
         return helpdesk_settings_config
     except Exception as e:
         import sys
-        print("'load_helpdesk_settings' template tag (django-helpdesk) crashed with following error:",
-              file=sys.stderr)
+
+        print(
+            "'load_helpdesk_settings' template tag (django-helpdesk) crashed with following error:",
+            file=sys.stderr,
+        )
         print(e, file=sys.stderr)
-        return ''
+        return ""
 
 
 register = Library()
-register.filter('load_helpdesk_settings', load_helpdesk_settings)
+register.filter("load_helpdesk_settings", load_helpdesk_settings)

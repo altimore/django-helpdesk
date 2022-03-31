@@ -29,4 +29,3 @@ Example
 A sample configuration in ``settings.py`` may be::
 
    TYPEPAD_ANTISPAM_API_KEY = 'abc123'
-

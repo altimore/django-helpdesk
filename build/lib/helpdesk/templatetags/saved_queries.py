@@ -24,7 +24,10 @@ def saved_queries(user):
         return user_saved_queries
     except Exception as e:
         import sys
-        print("'saved_queries' template tag (django-helpdesk) crashed with following error:",
-              file=sys.stderr)
+
+        print(
+            "'saved_queries' template tag (django-helpdesk) crashed with following error:",
+            file=sys.stderr,
+        )
         print(e, file=sys.stderr)
-        return ''
+        return ""

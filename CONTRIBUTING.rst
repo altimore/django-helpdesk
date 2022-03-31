@@ -51,7 +51,7 @@ In general, our git branching scheme looks like the following.
   * `0.3` is the branch for the 0.3 release and any bugfix releases
   * `0.2.x` is the branch for the 0.2 release and any bugfix releases
   * `0.1` is the branch for the legacy code; it is no longer supported
-  
+
 If you want to submit a specific patch for an older release,
 you can put your pull request against that branch specifically.
 However, we don't currently support any older release beyond

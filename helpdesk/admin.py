@@ -52,7 +52,7 @@ class TicketAdmin(admin.ModelAdmin):
             username, domain = ticket.submitter_email.split("@")
             username = username[:2] + "*" * (len(username) - 2)
             domain = domain[:1] + "*" * (len(domain) - 2) + domain[-1:]
-            return "%s@%s" % (username, domain)
+            return "{}@{}".format(username, domain)
         else:
             return ticket.submitter_email
 

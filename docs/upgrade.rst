@@ -23,7 +23,5 @@ The tips below are based on modifications of the original installation instructi
   "pinax.teams",
   "reversion",
   ```
-  
+
 - If using `send_templated_mail`, then it now needs to be imported from `helpdesk.templated_email`
-
-

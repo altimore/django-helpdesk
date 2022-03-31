@@ -4,4 +4,3 @@ host = https://www.transifex.com
 [django-helpdesk.core]
 file_filter = helpdesk/locale/<lang>/LC_MESSAGES/django.po
 source_lang = en
-

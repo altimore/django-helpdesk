@@ -37,7 +37,7 @@ from .templated_email import send_templated_mail
 
 def format_time_spent(time_spent):
     if time_spent:
-        time_spent = "{0:02d}h:{1:02d}m".format(
+        time_spent = "{:02d}h:{:02d}m".format(
             time_spent.seconds // 3600, time_spent.seconds % 3600 // 60
         )
     else:
@@ -398,7 +398,7 @@ class Queue(models.Model):
                     "NO QUEUE EMAIL ADDRESS DEFINED <%s>" % settings.DEFAULT_FROM_EMAIL
                 )
         else:
-            return "%s <%s>" % (self.title, self.email_address)
+            return "{} <{}>".format(self.title, self.email_address)
 
     from_address = property(_from_address)
 
@@ -733,7 +733,7 @@ class Ticket(models.Model):
 
     def _get_ticket_for_url(self):
         """A URL-friendly ticket ID, used in links."""
-        return "%s-%s" % (self.queue.slug, self.id)
+        return "{}-{}".format(self.queue.slug, self.id)
 
     ticket_for_url = property(_get_ticket_for_url)
 
@@ -762,7 +762,7 @@ class Ticket(models.Model):
         dep_msg = ""
         if not self.can_be_resolved:
             dep_msg = _(" - Open dependencies")
-        return "%s%s%s" % (self.get_status_display(), held_msg, dep_msg)
+        return "{}{}{}".format(self.get_status_display(), held_msg, dep_msg)
 
     get_status = property(_get_status)
 
@@ -783,7 +783,7 @@ class Ticket(models.Model):
             protocol = "https"
         else:
             protocol = "http"
-        return "%s://%s%s?ticket=%s&email=%s&key=%s" % (
+        return "{}://{}{}?ticket={}&email={}&key={}".format(
             protocol,
             site.domain,
             reverse("helpdesk:public_view"),
@@ -811,7 +811,7 @@ class Ticket(models.Model):
             protocol = "https"
         else:
             protocol = "http"
-        return "%s://%s%s" % (
+        return "{}://{}{}".format(
             protocol,
             site.domain,
             reverse("helpdesk:view", args=[self.id]),
@@ -849,7 +849,7 @@ class Ticket(models.Model):
         verbose_name_plural = _("Tickets")
 
     def __str__(self):
-        return "%s %s" % (self.id, self.title)
+        return "{} {}".format(self.id, self.title)
 
     def get_absolute_url(self):
         from django.urls import reverse
@@ -1021,7 +1021,7 @@ class FollowUp(models.Model):
         return "%s" % self.title
 
     def get_absolute_url(self):
-        return "%s#followup%s" % (self.ticket.get_absolute_url(), self.id)
+        return "{}#followup{}".format(self.ticket.get_absolute_url(), self.id)
 
     def save(self, *args, **kwargs):
         t = self.ticket
@@ -1501,7 +1501,7 @@ class KBItem(models.Model):
     score = property(_score)
 
     def __str__(self):
-        return "%s: %s" % (self.category.title, self.title)
+        return "{}: {}".format(self.category.title, self.title)
 
     class Meta:
         ordering = (
@@ -1863,7 +1863,7 @@ class TicketCC(models.Model):
     display = property(_display)
 
     def __str__(self):
-        return "%s for %s" % (self.display, self.ticket.title)
+        return "{} for {}".format(self.display, self.ticket.title)
 
     def clean(self):
         if self.user and not self.user.email:
@@ -2012,7 +2012,7 @@ class TicketCustomFieldValue(models.Model):
     value = models.TextField(blank=True, null=True)
 
     def __str__(self):
-        return "%s / %s" % (self.ticket, self.field)
+        return "{} / {}".format(self.ticket, self.field)
 
     class Meta:
         unique_together = (("ticket", "field"),)
@@ -2047,4 +2047,4 @@ class TicketDependency(models.Model):
     )
 
     def __str__(self):
-        return "%s / %s" % (self.ticket, self.depends_on)
+        return "{} / {}".format(self.ticket, self.depends_on)

@@ -55,7 +55,7 @@ Bootstrap overrides
 
 .row_tablehead, table.table caption {background-color: #dbd5d9;}
 table.table caption {
-    padding-left: 2em; 
+    padding-left: 2em;
     line-height: 2em; font-weight: bold;
 }
 table.ticket-stats caption {color: #fbff00; font-style: italic;}

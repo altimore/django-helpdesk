@@ -53,7 +53,7 @@ Locale
 ^^^^^^
 The *Locale* value must match the value in the ``locale`` column in the ``helpdesk_emailtemplate`` table if you wish to use those templates. For default installations/templates those values are ``cs``, ``de``, ``en``, ``es``, ``fi``, ``fr``, ``it``, ``pl``, ``ru`` and ``zh``.
 
-If you want to use a different *Local* then you will need to generate/edit the necessary templates (and set the value in the ``locale`` column) for those locales. This includes when using language variants, such as ``de-CH``, ``en-GB`` or ``fr-CA`` for example. 
+If you want to use a different *Local* then you will need to generate/edit the necessary templates (and set the value in the ``locale`` column) for those locales. This includes when using language variants, such as ``de-CH``, ``en-GB`` or ``fr-CA`` for example.
 
 E-Mail Check Interval
 ^^^^^^^^^^^^^^^^^^^^^

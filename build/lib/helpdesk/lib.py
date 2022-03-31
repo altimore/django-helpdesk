@@ -133,8 +133,8 @@ def text_is_spam(text, request):
     if ak.verify_key():
         ak_data = {
             "user_ip": request.META.get("REMOTE_ADDR", "127.0.0.1"),
-            "user_agent": request.META.get("HTTP_USER_AGENT", ""),
-            "referrer": request.META.get("HTTP_REFERER", ""),
+            "user_agent": request.headers.get("User-Agent", ""),
+            "referrer": request.headers.get("Referer", ""),
             "comment_type": "comment",
             "comment_author": "",
         }
@@ -180,7 +180,7 @@ def format_time_spent(time_spent):
     """
 
     if time_spent:
-        time_spent = "{0:02d}h:{1:02d}m".format(
+        time_spent = "{:02d}h:{:02d}m".format(
             time_spent.seconds // 3600, time_spent.seconds // 60
         )
     else:

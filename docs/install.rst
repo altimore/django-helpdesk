@@ -11,7 +11,7 @@ Before getting started, ensure your system meets the following recommended depen
 
 * Python 3.8+
 * Django 2.2 LTS or 3.2 LTS (strongly recommend migrating to 3.2 LTS as soon as possible)
-  
+
 Ensure any extra Django modules you wish to use are compatible before continuing.
 
 **NOTE**: Python 2.7 support was deprecated in ``django-helpdesk`` as of version 0.2.x

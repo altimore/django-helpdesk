@@ -553,7 +553,7 @@ def update_ticket(request, ticket_id, public=False):
 
         if not ticket:
             return HttpResponseRedirect(
-                "%s?next=%s" % (reverse("helpdesk:login"), request.path)
+                "{}?next={}".format(reverse("helpdesk:login"), request.path)
             )
 
     if not ticket:
@@ -1590,7 +1590,7 @@ def run_report(request, report):
     periods = []
     year, month = first_year, first_month
     working = True
-    periods.append("%s-%s" % (year, month))
+    periods.append("{}-{}".format(year, month))
 
     while working:
         month += 1
@@ -1599,7 +1599,7 @@ def run_report(request, report):
             month = 1
         if (year > last_year) or (month > last_month and year >= last_year):
             working = False
-        periods.append("%s-%s" % (year, month))
+        periods.append("{}-{}".format(year, month))
 
     if report == "userpriority":
         title = _("User by Priority")
@@ -1666,7 +1666,7 @@ def run_report(request, report):
 
         elif report == "usermonth":
             metric1 = "%s" % ticket.get_assigned_to
-            metric2 = "%s-%s" % (ticket.created.year, ticket.created.month)
+            metric2 = "{}-{}".format(ticket.created.year, ticket.created.month)
 
         elif report == "queuepriority":
             metric1 = "%s" % ticket.queue.title
@@ -1678,11 +1678,11 @@ def run_report(request, report):
 
         elif report == "queuemonth":
             metric1 = "%s" % ticket.queue.title
-            metric2 = "%s-%s" % (ticket.created.year, ticket.created.month)
+            metric2 = "{}-{}".format(ticket.created.year, ticket.created.month)
 
         elif report == "daysuntilticketclosedbymonth":
             metric1 = "%s" % ticket.queue.title
-            metric2 = "%s-%s" % (ticket.created.year, ticket.created.month)
+            metric2 = "{}-{}".format(ticket.created.year, ticket.created.month)
             metric3 = ticket.modified - ticket.created
             metric3 = metric3.days
 
@@ -1772,7 +1772,7 @@ def save_query(request):
     query.save()
 
     return HttpResponseRedirect(
-        "%s?saved_query=%s" % (reverse("helpdesk:list"), query.id)
+        "{}?saved_query={}".format(reverse("helpdesk:list"), query.id)
     )
 
 
@@ -2098,7 +2098,7 @@ def date_rel_to_today(today, offset):
 
 
 def sort_string(begin, end):
-    return "sort=created&date_from=%s&date_to=%s&status=%s&status=%s&status=%s" % (
+    return "sort=created&date_from={}&date_to={}&status={}&status={}&status={}".format(
         begin,
         end,
         Ticket.OPEN_STATUS,

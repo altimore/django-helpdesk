@@ -117,4 +117,3 @@ have their own licenses. See LICENSE.3RDPARTY for license terms for
 included packages.
 
 .. _note: http://docs.djangoproject.com/en/dev/ref/databases/#sqlite-string-matching
-

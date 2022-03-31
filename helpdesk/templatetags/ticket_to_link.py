@@ -20,7 +20,7 @@ import re
 
 
 def num_to_link(text):
-    if text == '':
+    if text == "":
         return text
 
     matches = []
@@ -29,7 +29,7 @@ def num_to_link(text):
 
     for match in reversed(matches):
         number = match.groups()[0]
-        url = reverse('helpdesk:view', args=[number])
+        url = reverse("helpdesk:view", args=[number])
         try:
             ticket = Ticket.objects.get(id=number)
         except Ticket.DoesNotExist:
@@ -37,8 +37,16 @@ def num_to_link(text):
 
         if ticket:
             style = ticket.get_status_display()
-            text = "%s <a href='%s' class='ticket_link_status ticket_link_status_%s'>#%s</a>%s" % (
-                text[:match.start() + 1], url, style, match.groups()[0], text[match.end():])
+            text = (
+                "%s <a href='%s' class='ticket_link_status ticket_link_status_%s'>#%s</a>%s"
+                % (
+                    text[: match.start() + 1],
+                    url,
+                    style,
+                    match.groups()[0],
+                    text[match.end() :],
+                )
+            )
     return mark_safe(text)
 
 

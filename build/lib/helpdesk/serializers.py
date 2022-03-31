@@ -27,9 +27,21 @@ class DatatablesTicketSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ticket
         # fields = '__all__'
-        fields = ('ticket', 'id', 'priority', 'title', 'queue', 'status',
-                  'created', 'due_date', 'assigned_to', 'submitter', 'row_class',
-                  'time_spent', 'kbitem')
+        fields = (
+            "ticket",
+            "id",
+            "priority",
+            "title",
+            "queue",
+            "status",
+            "created",
+            "due_date",
+            "assigned_to",
+            "submitter",
+            "row_class",
+            "time_spent",
+            "kbitem",
+        )
 
     def get_queue(self, obj):
         return {"title": obj.queue.title, "id": obj.queue.id}

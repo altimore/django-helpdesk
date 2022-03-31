@@ -68,5 +68,3 @@ Optionally, their access to view tickets, both on the dashboard and through sear
 Licensing
 ---------
 django-helpdesk is released under the BSD license, however it packages 3rd party applications which may be using a different license. More details can be found in the :doc:`license` documentation.
-
-

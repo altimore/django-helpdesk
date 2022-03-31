@@ -7,9 +7,9 @@
 {% block helpdesk_head %}
     <!-- Timeline 3 CSS -->
     {% if helpdesk_settings.HELPDESK_USE_CDN %}
-    <link title="timeline-styles" rel="stylesheet" href="https://cdn.knightlab.com/libs/timeline3/latest/css/timeline.css">
+        <link title="timeline-styles" rel="stylesheet" href="https://cdn.knightlab.com/libs/timeline3/latest/css/timeline.css">
     {% else %}
-    <link title="timeline-styles" rel="stylesheet" href="{% static 'helpdesk/vendor/timeline3/css/timeline.css' %}">
+        <link title="timeline-styles" rel="stylesheet" href="{% static 'helpdesk/vendor/timeline3/css/timeline.css' %}">
     {% endif %}
 {% endblock %}
 
@@ -40,14 +40,14 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" href="#datatabletabcontents" id="datatabletabcontents-tab"
-                       data-toggle="tab" role="tab" aria-controls="datatabletabcontents" aria-selected=true>
+                        data-toggle="tab" role="tab" aria-controls="datatabletabcontents" aria-selected=true>
                         <i class="fas fa-th-list"></i>
                         {% trans "Table" %}
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#timelinetabcontents" id="timelinetabcontents-tab" data-toggle="tab"
-                       role="tab" aria-controls="timelinetabcontents" aria-selected=false>
+                        role="tab" aria-controls="timelinetabcontents" aria-selected=false>
                         <i class="fas fa-history"></i>
                         {% trans "Timeline" %}
                     </a>
@@ -58,25 +58,25 @@
             {{ search_message|safe }}
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="datatabletabcontents" role="tabpanel"
-                     aria-labelledby="datatabletabcontents-tab">
+                    aria-labelledby="datatabletabcontents-tab">
                     <form method='post' action='{% url 'helpdesk:mass_update' %}' id="ticket_mass_update">
                         {% csrf_token %}
                         <table class="table table-sm table-striped table-bordered table-hover"
-                               id="ticketTable" data-page-length='{{ default_tickets_per_page }}'>
+                            id="ticketTable" data-page-length='{{ default_tickets_per_page }}'>
                             <thead class="thead-light">
-                            <tr>
-                                <th></th>
-                                <th>{% trans "Ticket" %}</th>
-                                <th>{% trans "Priority" %}</th>
-                                <th>{% trans "Queue" %}</th>
-                                <th>{% trans "Status" %}</th>
-                                <th>{% trans "Created" %}</th>
-                                <th>{% trans "Due Date" %}</th>
-                                <th>{% trans "Owner" %}</th>
-                                <th>{% trans "Submitter" %}</th>
-                                <th>{% trans "Time Spent" %}</th>
-                                <th>{% trans "KB item" %}</th>
-                            </tr>
+                                <tr>
+                                    <th></th>
+                                    <th>{% trans "Ticket" %}</th>
+                                    <th>{% trans "Priority" %}</th>
+                                    <th>{% trans "Queue" %}</th>
+                                    <th>{% trans "Status" %}</th>
+                                    <th>{% trans "Created" %}</th>
+                                    <th>{% trans "Due Date" %}</th>
+                                    <th>{% trans "Owner" %}</th>
+                                    <th>{% trans "Submitter" %}</th>
+                                    <th>{% trans "Time Spent" %}</th>
+                                    <th>{% trans "KB item" %}</th>
+                                </tr>
                             </thead>
                         </table>
 
@@ -146,7 +146,7 @@
                     <div class="card-header" id="headingOne">
                         <h5 class="mb-0">
                             <button class="btn btn-link btn-sm" type="button" data-toggle="collapse"
-                                    data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                                 <i class="fas fa-filter"></i>
                                 {% trans "Filters" %}
                             </button>
@@ -154,14 +154,14 @@
                     </div>
 
                     <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
-                         data-parent="#queryAccordion">
+                        data-parent="#queryAccordion">
                         <div class="card-body">
                             <form method="get">
                                 <div class="form-group float-right">
                                     <label for="filterBuilderSelect">{% trans "Add filter" %}:</label>
                                     <select class="custom-select custom-select-sm mb-0"
-                                            aria-describedby="select-description" name="select" id="filterBuilderSelect"
-                                            onChange="onFilterChange(this.value)">
+                                        aria-describedby="select-description" name="select" id="filterBuilderSelect"
+                                        onChange="onFilterChange(this.value)">
                                         <option value="">--</option>
                                         <option id="filterBuilderSelect-Sort" value="Sort"{% if query_params.sorting %} disabled{% endif %}>
                                             {% trans "Sorting" %}
@@ -245,7 +245,7 @@
                     <div class="card-header" id="headingTwo">
                         <h5 class="mb-0">
                             <button class="btn btn-link collapsed btn-sm" type="button" data-toggle="collapse"
-                                    data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                                 <i class="fas fa-save"></i>
                                 {% trans "Save Query" %}
                             </button>
@@ -263,7 +263,7 @@
 
                                     <dt><label for='id_shared'>{% trans "Shared?" %}</label></dt>
                                     <dd><input type='checkbox' name='shared'
-                                               id='id_shared'/> {% trans "Yes, share this query with other users." %}
+                                        id='id_shared'/> {% trans "Yes, share this query with other users." %}
                                     </dd>
                                     <dd class='form_help_text'>{% trans "If you share this query, it will be visible by <em>all</em> other logged-in users." %}</dd>
 
@@ -281,27 +281,27 @@
                         <div class="card-header" id="headingThree">
                             <h5 class="mb-0">
                                 <button class="btn btn-link collapsed btn-sm" type="button" data-toggle="collapse"
-                                        data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                    data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
                                     <i class="fas fa-clipboard-check"></i>
                                     {% trans "Use Saved Query" %}
                                 </button>
                             </h5>
                         </div>
                         <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
-                             data-parent="#queryAccordion">
+                            data-parent="#queryAccordion">
                             <div class="card-body">
                                 <form action='{% url 'helpdesk:list' %}'>
                                     <p>
                                         <label for='id_query_selector'>{% trans "Query" %}</label>
                                         <select name='saved_query' id='id_query_selector'>
-                                        {% for q in user_saved_queries %}
-                                            <option value='{{ q.id }}'>
-                                                {{ q.title }}{% if q.shared %}
-                                                    (Shared{% if user != q.user %} by {{ q.user.get_username }}{% endif %})
-                                                {% endif %}
-                                            </option>
-                                        {% endfor %}
-                                    </select></p>
+                                            {% for q in user_saved_queries %}
+                                                <option value='{{ q.id }}'>
+                                                    {{ q.title }}{% if q.shared %}
+                                                        (Shared{% if user != q.user %} by {{ q.user.get_username }}{% endif %})
+                                                    {% endif %}
+                                                </option>
+                                            {% endfor %}
+                                        </select></p>
                                     <input class="btn btn-primary" type='submit' value='{% trans "Run Query" %}'>
                                 </form>
                             </div>
@@ -322,19 +322,19 @@
     <script src='{% static "helpdesk/filter.js" %}'></script>
     <!-- Timeline 3 JavaScript -->
     {% if helpdesk_settings.HELPDESK_USE_CDN %}
-    <script src="https://cdn.knightlab.com/libs/timeline3/latest/js/timeline.js"></script>
+        <script src="https://cdn.knightlab.com/libs/timeline3/latest/js/timeline.js"></script>
     {% else %}
-    <script src="{% static 'helpdesk/vendor/timeline3/js/timeline.js' %}"></script>
+        <script src="{% static 'helpdesk/vendor/timeline3/js/timeline.js' %}"></script>
     {% endif %}
     <script>
         function get_url(row) {
             return "{% url 'helpdesk:view' 1234 %}".replace(/1234/, row.id.toString());
         }
-        
+
         function htmlEntities(str) {
             return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
         }
-        
+
         $(document).ready(function () {
             // Ticket DataTable Initialization
             $('#ticketTable').DataTable({
@@ -369,8 +369,8 @@
                         render: function (data, type, row, meta) {
                             if (type === 'display') {
                                 data = '<div class="tickettitle"><a href="' + get_url(row) + '" >' +
-                                    row.id + '. ' +
-                                    htmlEntities(row.title) + '</a></div>';
+                                row.id + '. ' +
+                                htmlEntities(row.title) + '</a></div>';
                             }
                             return data
                         }
@@ -447,4 +447,3 @@
         })
     </script>
 {% endblock %}
-

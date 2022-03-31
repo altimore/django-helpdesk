@@ -4,14 +4,18 @@ from django.conf import settings
 
 from datetime import datetime
 
-from helpdesk.forms import CUSTOMFIELD_DATE_FORMAT, CUSTOMFIELD_TIME_FORMAT, CUSTOMFIELD_DATETIME_FORMAT
+from helpdesk.forms import (
+    CUSTOMFIELD_DATE_FORMAT,
+    CUSTOMFIELD_TIME_FORMAT,
+    CUSTOMFIELD_DATETIME_FORMAT,
+)
 
 register = Library()
 
 
 @register.filter
 def get(value, arg, default=None):
-    """ Call the dictionary get function """
+    """Call the dictionary get function"""
     return value.get(arg, default)
 
 
@@ -22,13 +26,21 @@ def datetime_string_format(value):
     :return: String - reformatted to default datetime, date, or time string if received in one of the expected formats
     """
     try:
-        new_value = date_filter(datetime.strptime(value, CUSTOMFIELD_DATETIME_FORMAT), settings.DATETIME_FORMAT)
+        new_value = date_filter(
+            datetime.strptime(value, CUSTOMFIELD_DATETIME_FORMAT),
+            settings.DATETIME_FORMAT,
+        )
     except (TypeError, ValueError):
         try:
-            new_value = date_filter(datetime.strptime(value, CUSTOMFIELD_DATE_FORMAT), settings.DATE_FORMAT)
+            new_value = date_filter(
+                datetime.strptime(value, CUSTOMFIELD_DATE_FORMAT), settings.DATE_FORMAT
+            )
         except (TypeError, ValueError):
             try:
-                new_value = date_filter(datetime.strptime(value, CUSTOMFIELD_TIME_FORMAT), settings.TIME_FORMAT)
+                new_value = date_filter(
+                    datetime.strptime(value, CUSTOMFIELD_TIME_FORMAT),
+                    settings.TIME_FORMAT,
+                )
             except (TypeError, ValueError):
                 # If NoneType return empty string, else return original value
                 new_value = "" if value is None else value

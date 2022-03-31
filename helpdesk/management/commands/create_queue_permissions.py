@@ -53,7 +53,7 @@ class Command(BaseCommand):
 
         # Create permissions for the queues, which may be all or not
         for q in queues:
-            self.stdout.write("Preparing Queue %s [%s]" % (q.title, q.slug))
+            self.stdout.write("Preparing Queue {} [{}]".format(q.title, q.slug))
 
             if q.permission_name:
                 self.stdout.write(
