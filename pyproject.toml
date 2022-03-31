@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "helpdesk"
+name = "django-helpdesk"
 version = "0.3.4"
 description="Django-powered ticket tracker for your helpdesk"
 authors = ["Ross Poulton <ross@rossp.org>"]
@@ -24,6 +24,9 @@ classifiers = [
         "Topic :: Software Development :: Libraries :: Python Modules",
         "Topic :: Office/Business",
         "Natural Language :: English",
+]
+packages = [
+    { include = "helpdesk" },
 ]
 
 
