@@ -13,11 +13,8 @@ from urllib.parse import quote
 import helpdesk.views.abstract_views as abstract_views
 import helpdesk.views.staff as staff
 from django.conf import settings
-from django.core.exceptions import (
-    ImproperlyConfigured,
-    ObjectDoesNotExist,
-    PermissionDenied,
-)
+from django.core.exceptions import (ImproperlyConfigured, ObjectDoesNotExist,
+                                    PermissionDenied)
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
@@ -90,11 +87,13 @@ class BaseCreateTicketView(abstract_views.AbstractCreateTicketMixin, FormView):
                     allow_public_submission=True,
                 ).id
             except Queue.DoesNotExist as e:
-                logger.fatal(
-                    "Public queue '%s' is configured as default but can't be found",
-                    settings.HELPDESK_PUBLIC_TICKET_QUEUE,
-                )
-                raise ImproperlyConfigured("Wrong public queue configuration") from e
+                # Fall back on first queue if not found
+                initial_data["queue"] = 1
+                # logger.fatal(
+                #     "Public queue '%s' is configured as default but can't be found",
+                #     settings.HELPDESK_PUBLIC_TICKET_QUEUE,
+                # )
+                # raise ImproperlyConfigured("Wrong public queue configuration") from e
         if hasattr(settings, "HELPDESK_PUBLIC_TICKET_PRIORITY"):
             initial_data["priority"] = settings.HELPDESK_PUBLIC_TICKET_PRIORITY
         if hasattr(settings, "HELPDESK_PUBLIC_TICKET_DUE_DATE"):

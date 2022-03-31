@@ -26,16 +26,15 @@ Demo Quickstart
 
 `django-helpdesk` includes a basic demo Django project so that you may easily
 get started with testing or developing `django-helpdesk`. The demo project
-resides in the `demo/` top-level folder.
+resides in the `demo_helpdesk/` top-level folder.
 
-It's likely that you can start up a demo project server by running
-only the command::
-
-    make rundemo
+    git clone https://github.com/altimore/django-helpdesk.git
+    cd django-helpdesk
+    poetry run demo_helpdesk/manage.py migrate
+    poetry run demo_helpdesk/manage.py createsuperuser
+    poetry run demo_helpdesk/manage.py runserver
 
 then pointing your web browser at `localhost:8080`.
-
-For more information and options, please read the `demo/README.rst` file.
 
 **NOTE REGARDING SQLITE AND SEARCHING:**
 The demo project uses `sqlite` as its database. Sqlite does not allow
@@ -50,48 +49,13 @@ to alert you to this shortcoming. There is no way around it, sorry.
 Installation
 ------------
 
-`django-helpdesk` requires:
-
-* Python 3.8+
-* Django 2.2 LTS or 3.2 LTS (recommend migration to 3.2 as soon as possible)
-
-You can quickly install the latest stable version of `django-helpdesk`
-app via `pip`::
-
-    pip install django-helpdesk
-
-You may also check out the `master` branch on GitHub, and install manually::
-
-    python setup.py install
-
-Either way, you will need to add `django-helpdesk` to an existing
-Django project.
-
-For further installation information see `docs/install.html`
-and `docs/configuration.html`
+    poetry add git+https://github.com/altimore/django-helpdesk.git#stable
 
 Testing
 -------
-
-See `quicktest.py` for usage details.
-
-Upgrading from previous versions
---------------------------------
-
-If you are upgrading from a previous version of `django-helpdesk` that used
-migrations, get an up to date version of the code base (eg by using
-`git pull` or `pip install --upgrade django-helpdesk`) then migrate the database::
-
-    python manage.py migrate helpdesk --db-dry-run # DB untouched
-    python manage.py migrate helpdesk
-
-Lastly, restart your web server software (eg Apache) or FastCGI instance, to
-ensure the latest changes are in use.
-
-Unfortunately we are unable to assist if you are upgrading from a
-version of `django-helpdesk` prior to migrations (ie pre-2011).
-
-You can continue to the 'Initial Configuration' area, if needed.
+    git clone https://github.com/altimore/django-helpdesk.git
+    cd django-helpdesk
+    poetry run demo_helpdesk/manage.py test
 
 Contributing
 ------------

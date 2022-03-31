@@ -14,6 +14,7 @@ docs/doctrees/*
 .idea
 *.~undo-tree~
 build/
+.#*
 
 # ignore demo attachments that user might have added
 helpdesk/attachments/
