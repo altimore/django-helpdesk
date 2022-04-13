@@ -47,6 +47,7 @@ base64_pattern = r"(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)
 urlpatterns = [
     url(r"^dashboard/$", staff.dashboard, name="dashboard"),
     url(r"^tickets/$", staff.ticket_list, name="list"),
+    url(r"^tickets_new/$", staff.TicketListView.as_view(), name="list"),
     url(r"^tickets/update/$", staff.mass_update, name="mass_update"),
     url(r"^tickets/merge$", staff.merge_tickets, name="merge_tickets"),
     url(r"^tickets/(?P<ticket_id>[0-9]+)/$", staff.view_ticket, name="view"),

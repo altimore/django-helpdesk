@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "django-helpdesk"
-version = "0.3.4"
+version = "0.3.5"
 description="Django-powered ticket tracker for your helpdesk"
 authors = ["Ross Poulton <ross@rossp.org>"]
 maintainers = ["Garret Wassermann <gwasser@gmail.com>"]
@@ -49,6 +49,7 @@ djangorestframework = "^3.13.1"
 django-model-utils = "^4.2.0"
 # django-markdown-deux = "^1.0.5" 
 django-naomi = "^0.8"
+click = "^8.1.1"
 
 [tool.poetry.dev-dependencies]
 PySocks = "^1.7.1"

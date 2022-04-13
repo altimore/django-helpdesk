@@ -1,0 +1,61 @@
+
+- extends "default_templates/list.haml"
+
+- load i18n 
+
+- block helpdesk_title
+  - trans "Tickets"
+
+- block title
+  - trans "Tickets"
+
+- block buttons
+  - include "helpdesk/navigation.haml"
+
+- block results
+  %table.table.table-bordered
+    %tr
+      %th
+       	\#
+      %th
+        - trans "Pr"
+      %th
+        - trans "Title"
+      %th
+        - trans "status"
+      %th
+        - trans "Created"
+      %th
+        - trans "Last Update"
+      %th
+        - trans "Due date"
+      %th
+        - trans "Owner"
+
+    - for ticket in object_list
+      %tr
+        %td
+          %a(href="={ticket.get_absolute_url}")
+            = ticket.id
+        %td
+          = ticket.get_priority_display
+        %td
+          %a(href="={ticket.get_absolute_url}")
+            = ticket.title
+        %td
+          = ticket.status
+        %td
+          = ticket.created
+        %td
+          = ticket.modified
+        %td
+          - if ticket.due_date
+            = ticket.due_date
+          - else
+            \-
+        %td
+          - if ticket.assigned_to
+            = ticket.assigned_to
+          - else
+            \-
+
