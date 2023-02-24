@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "django-helpdesk"
-version = "0.3.5"
+version = "0.3.6"
 description="Django-powered ticket tracker for your helpdesk"
 authors = ["Ross Poulton <ross@rossp.org>"]
 maintainers = ["Garret Wassermann <gwasser@gmail.com>"]
