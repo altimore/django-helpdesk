@@ -45,7 +45,7 @@ pytz = "^2024.1"
 six = "^1.16.0"
 djangorestframework = "^3.14.0"
 django-model-utils = "^4.4.0"
-django-naomi = "^0.9"
+django-naomi = { git = "https://github.com/altimore/django-naomi.git", rev = "hot" }
 click = "^8.1.7"
 commitizen = "^3.14.1"
 
