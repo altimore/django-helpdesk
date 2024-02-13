@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "django-helpdesk"
-version = "0.3.6"
+version = "0.4.0"
 description = "Django-powered ticket tracker for your helpdesk"
 authors = ["Ross Poulton <ross@rossp.org>"]
 maintainers = ["Garret Wassermann <gwasser@gmail.com>"]
@@ -48,6 +48,7 @@ django-model-utils = "^4.4.0"
 # django-markdown-deux = "^1.0.5" 
 django-naomi = "^0.8"
 click = "^8.1.7"
+commitizen = "^3.14.1"
 
 [tool.poetry.group.dev.dependencies]
 pycodestyle = "^2.11.1"
@@ -58,6 +59,13 @@ argparse = "^1.4.0"
 pbr = "^5.8.1"
 mock = "^4.0.3"
 
+
+[tool.commitizen]
+name = "cz_conventional_commits"
+tag_format = "$version"
+version_scheme = "semver"
+version_provider = "poetry"
+update_changelog_on_bump = true
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
