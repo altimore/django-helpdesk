@@ -1,3 +1,12 @@
+## 0.4.1 (2024-02-14)
+
+### Fix
+
+- dependencies versions
+- moved commitizen in the dev dependencies
+- updated dependencies
+- updated django-naomi version
+
 ## 0.4.0 (2024-02-13)
 
 ### Feat
