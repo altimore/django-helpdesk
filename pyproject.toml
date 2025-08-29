@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "django-helpdesk"
-version = "0.4.1"
+version = "0.4.2"
 description = "Django-powered ticket tracker for your helpdesk"
 authors = ["Ross Poulton <ross@rossp.org>"]
 maintainers = ["Garret Wassermann <gwasser@gmail.com>"]
@@ -29,33 +29,33 @@ packages = [{ include = "helpdesk" }]
 
 
 [tool.poetry.dependencies]
-python = "^3.12 || ^3.11 || ^3.10"
-Django = "^5.0.2"
-django-bootstrap4-form = "^4.0.1"
-celery = "^5.3.6"
-django-celery-beat = { git = "https://github.com/celery/django-celery-beat.git" }
-email-reply-parser = "^0.5.12"
-akismet = "^1.2.1"
-Markdown = "^3.5.2"
-beautifulsoup4 = "^4.12.3"
-lxml = "^5.3.0"
-simplejson = "^3.19.2"
-pytz = "^2024.1"
-six = "^1.16.0"
-djangorestframework = "^3.14.0"
-django-model-utils = "^4.4.0"
+python = ">=3.10,<3.14"
+Django = ">=4.2,<5.0"
+django-bootstrap4-form = ">=4.0.1"
+celery = ">=5.3.6,<6.0"
+django-celery-beat = ">=2.5.0,<3.0"
+email-reply-parser = ">=0.5.12"
+akismet = ">=1.2.1"
+Markdown = ">=3.5.2"
+beautifulsoup4 = ">=4.12.3"
+lxml = ">=5.3.0"
+simplejson = ">=3.19.2"
+pytz = ">=2024.1"
+six = ">=1.16.0"
+djangorestframework = ">=3.14.0,<4.0"
+django-model-utils = ">=4.4.0"
 django-naomi = { git = "https://github.com/altimore/django-naomi.git", rev = "hot" }
-click = "^8.1.7"
+click = ">=8.1.7,<9.0"
 
 [tool.poetry.group.dev.dependencies]
-pycodestyle = "^2.11.1"
-codecov = "^2.1.13"
-coverage = "^7.4.1"
+pycodestyle = ">=2.11.1"
+codecov = ">=2.1.13"
+coverage = ">=7.4.1"
 PySocks = "^1.7.1"
 argparse = "^1.4.0"
 pbr = "^5.8.1"
-mock = "^4.0.3"
-commitizen = "^3.14.1"
+mock = ">=4.0.3"
+commitizen = ">=3.14.1"
 
 [tool.commitizen]
 name = "cz_conventional_commits"
