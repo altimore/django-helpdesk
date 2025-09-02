@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "django-helpdesk"
-version = "0.4.4"
+version = "0.4.5"
 description = "Django-powered ticket tracker for your helpdesk"
 authors = ["Ross Poulton <ross@rossp.org>"]
 maintainers = ["Garret Wassermann <gwasser@gmail.com>"]
@@ -30,7 +30,7 @@ packages = [{ include = "helpdesk" }]
 
 [tool.poetry.dependencies]
 python = ">=3.11,<4.0"
-Django = ">=4.2,<5.0"
+Django = ">=4.2,<6.0"
 django-bootstrap4-form = ">=4.0.1"
 celery = ">=5.3.6,<6.0"
 django-celery-beat = ">=2.5.0,<3.0"
